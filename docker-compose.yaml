@@ -3,6 +3,12 @@ services:
   babybuddy:
     image: lscr.io/linuxserver/babybuddy
     container_name: babybuddy
+    # user: "${UID}:${GID}"
+    # the running 'root' user is mapped to the user who starts the container_name
+    # so because we're running as non root, this is how we allow backups without sudo 
+    environment:
+      - PUID=0
+      - PGID=0
     env_file: .env
     volumes:
       - ./config:/config
